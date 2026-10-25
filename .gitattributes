@@ -1,0 +1,9 @@
+# Normalize line endings so Windows and Linux contributors match
+* text=auto eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Test vectors and binaries must not be altered
+*.bin binary
+*.der binary
+vectors/** -text
