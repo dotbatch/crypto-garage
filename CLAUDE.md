@@ -78,6 +78,7 @@ This repo is a public record. Every shortcut is visible, and the patterns here w
 ### Tech Stack
 Not final yet. Current plan:
 - Core and embedded: Rust (stable), formatted with `rustfmt`, linted with `clippy -D warnings`
+- Automotive ECU-side components (e.g. SecOC or secure-boot verifiers): C (C11 or C17), built on a vetted C library such as mbedTLS or wolfSSL, formatted with `clang-format`, checked with `clang-tidy` and `cppcheck`, and tested under AddressSanitizer and UndefinedBehaviorSanitizer. Use C only where it reflects how real ECUs are built; everything else stays in Rust
 - Browser demos: Rust compiled to WebAssembly
 - Teaching notebooks and scripts: Python 3.12+, formatted and linted with `ruff`
 - Site: static site generator (Zola is the leading candidate), deployed to GitHub Pages
