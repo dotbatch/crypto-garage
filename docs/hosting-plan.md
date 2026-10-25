@@ -24,9 +24,8 @@ pq.<domain>      (VPS)                <- later: hybrid PQ TLS server
 
 ## Domain
 
-- [ ] Pick the domain. Preference order:
-  1. A domain with my name, using a subdomain such as `crypto.` or `lab.`
-  2. A neutral domain that fits "crypto-garage"
+Recommended: `garage.udcio.com` for the site and `pq.udcio.com` for the VPS endpoint. pixsol.net and pxibit.com are live business sites and stay as they are. See [deployment-plan.md](deployment-plan.md) for details and DNS steps.
+
 - Avoid employer names (e.g. GM) and anything that reads as cryptocurrency.
 
 ## Site structure
@@ -44,7 +43,7 @@ pq.<domain>      (VPS)                <- later: hybrid PQ TLS server
 - [ ] Create `site/` in the repo
 - [ ] Add a GitHub Actions workflow that builds `site/` (and any Wasm demos) and deploys to Pages; use a `paths:` filter so it only runs when `site/` or `apps/` change
 - [ ] Settings → Pages: source = GitHub Actions
-- [ ] Add the custom domain in Settings → Pages, then a `CNAME` DNS record at GoDaddy pointing the subdomain to `dotbatch.github.io`
+- [ ] Add the custom domain in Settings → Pages, then a `CNAME` DNS record at Namecheap (udcio.com's DNS host) pointing the subdomain to `dotbatch.github.io`
 - [ ] Verify the domain in GitHub account settings (stops anyone else claiming it on Pages)
 - [ ] Turn on "Enforce HTTPS"
 - [ ] Add a Content Security Policy via `<meta>` tag (Pages cannot set custom headers); allow `wasm-unsafe-eval` only where Wasm demos need it
