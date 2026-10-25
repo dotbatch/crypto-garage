@@ -10,7 +10,7 @@ How code in this repo reaches the public. Builds on [hosting-plan.md](hosting-pl
 | `pixsol.net` | Live "Pix Sol" site on the GoDaddy VPS | Leave alone |
 | `pxibit.com` | Live small-business web services site on the GoDaddy VPS | Leave alone. Optionally link to the showcase |
 
-Hostnames (recommended, confirm before setting up DNS):
+**Decided:** `udcio.com` hosts the showcase. Hostnames:
 
 | Hostname | Served by | Purpose |
 |---|---|---|
@@ -117,7 +117,7 @@ Options, in order of preference:
 
 ## Order of work
 
-1. Confirm hostnames, check the existing `udcio.com` record
+1. Check the existing `udcio.com` record
 2. `ci.yml` with tests (needed before anything deploys)
 3. `site/` skeleton and `pages.yml`; DNS and HTTPS for `garage.udcio.com`
 4. First demo page
