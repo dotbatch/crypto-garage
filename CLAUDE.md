@@ -123,4 +123,4 @@ docs/      Plans, write-ups, threat models
    - `test:` test or test-vector changes
    - `ci:` workflows and deployment pipeline
    - `chore:` maintenance
-4. Push to GitHub only when asked
+4. Push to GitHub only when asked. Exception: the daily job ([docs/daily-job.md](docs/daily-job.md)) may push its own `fam-*` branch and open a PR, but never pushes to `main` or merges
