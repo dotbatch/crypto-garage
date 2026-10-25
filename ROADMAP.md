@@ -48,3 +48,4 @@ Candidate projects, grouped by theme. Order within a group is a rough suggested 
 - [ ] CI: build, unit tests, known-answer tests, Wycheproof, `cargo audit` / `pip-audit`
 - [ ] Shared test-vector fetcher under `vectors/`
 - [ ] Doc template per app: goal, threat model, standard cited, how to run, limitations
+- [ ] Showcase site and PQ TLS endpoint: see [docs/hosting-plan.md](docs/hosting-plan.md)
