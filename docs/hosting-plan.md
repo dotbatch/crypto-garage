@@ -39,7 +39,7 @@ pq.<domain>      (VPS)                <- later: hybrid PQ TLS server
 
 ## Phase 1: static site on GitHub Pages
 
-- [ ] Pick a static site generator (candidates: Astro, Zola, Hugo; Zola fits a Rust-heavy repo)
+- [x] Pick a static site generator (Zola: fits a Rust-heavy repo)
 - [ ] Create `site/` in the repo
 - [ ] Add a GitHub Actions workflow that builds `site/` (and any Wasm demos) and deploys to Pages; use a `paths:` filter so it only runs when `site/` or `apps/` change
 - [ ] Settings → Pages: source = GitHub Actions
