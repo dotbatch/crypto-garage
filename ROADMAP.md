@@ -43,7 +43,7 @@ Candidate projects, grouped by theme. Order within a group is a rough suggested 
 
 ## Cross-cutting work
 
-- [ ] Pick languages (suggested: Rust for core and embedded, Python for teaching notebooks, a small web UI for demos)
+- [x] Pick languages (Rust for core, embedded and Wasm demos; C for ECU-side components; Python for teaching notebooks; see `CLAUDE.md`)
 - [x] Choose a license (Apache-2.0)
 - [ ] CI: build, unit tests, known-answer tests, Wycheproof, `cargo audit` / `pip-audit`
 - [ ] Shared test-vector fetcher under `vectors/`
