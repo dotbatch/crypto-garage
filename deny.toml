@@ -1,0 +1,31 @@
+# cargo-deny policy, checked in CI by `cargo deny check`.
+# Docs: https://embarkstudios.github.io/cargo-deny/
+
+[graph]
+all-features = true
+
+[advisories]
+# Vulnerabilities in the RustSec database always fail. Also fail on crates yanked from crates.io.
+yanked = "deny"
+
+[licenses]
+# Permissive licenses that can ship inside an Apache-2.0 project.
+allow = [
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "MIT",
+    "Unicode-3.0",
+    "Zlib",
+]
+# The list is a policy, not an inventory: don't warn about licenses no dependency uses yet.
+unused-allowed-license = "allow"
+
+[bans]
+# Two versions of one crate means two copies of the code to audit.
+multiple-versions = "deny"
+wildcards = "deny"
+# Workspace crates are unpublished and depend on each other by path.
+allow-wildcard-paths = true
