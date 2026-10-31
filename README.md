@@ -1,6 +1,6 @@
 # crypto-garage
 
-Hands-on apps that show modern cryptography working, from the proven primitives that run the internet today to the post-quantum algorithms standardized in the last few years. Several projects lean toward **vehicle cybersecurity**, where cryptography has to fit in small ECUs, slow buses and long vehicle lifetimes.
+Hands-on apps that show modern cryptography working, from the proven primitives that run the internet today to the post-quantum algorithms standardized in the last few years. A few projects target **embedded and IoT devices**, where cryptography has to fit in small microcontrollers and firmware has to stay trustworthy for years.
 
 > **Status:** planning. See [ROADMAP.md](ROADMAP.md) for the project list.
 
@@ -11,7 +11,7 @@ Hands-on apps that show modern cryptography working, from the proven primitives 
 3. **Every primitive checks against known-answer tests.** NIST ACVP / CAVP vectors, RFC test vectors and [Project Wycheproof](https://github.com/C2SP/wycheproof) edge cases run in CI.
 4. **Cite the standard.** Each app names the FIPS, SP, RFC or ISO document it follows, with the version.
 5. **Show the failure modes too.** Nonce reuse, missing authentication, timing leaks and downgrade attacks get their own demos, so the "why" is visible.
-6. **Public information only.** Automotive examples are built from public standards (AUTOSAR, ISO/SAE 21434, ISO 14229, IEEE 1609.2, Uptane) and contain nothing from any employer.
+6. **Public information only.** Everything here is built from public standards and contains nothing from any employer.
 
 ## Layout (planned)
 

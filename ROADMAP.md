@@ -22,17 +22,13 @@ Candidate projects, grouped by theme. Order within a group is a rough suggested 
 | Crypto-agility harness | Swap algorithms by config; inventory what a codebase uses (a CBOM) | NIST IR 8547 (PQC transition) |
 | Watch list | FN-DSA (Falcon, draft FIPS 206) and HQC (selected 2025) once final | — |
 
-## 3. Vehicle cybersecurity
+## 3. Embedded and IoT
 
 | Project | What it shows | Standards |
 |---|---|---|
-| SecOC CAN simulator | AES-128-CMAC MACs and freshness counters on simulated CAN frames; replay and spoofing attacks against it | AUTOSAR SecOC (public spec) |
-| Lightweight crypto on an ECU | Ascon-AEAD128 vs AES-GCM on a microcontroller-class target (RP2040 / STM32) | NIST SP 800-232 |
+| Lightweight crypto on a microcontroller | Ascon-AEAD128 vs AES-GCM on a microcontroller-class target (RP2040 / STM32) | NIST SP 800-232 |
 | Secure boot and firmware signing | Signed image chain, rollback protection, PQC-signed firmware with ML-DSA / LMS | SP 800-193, SP 800-208 |
-| OTA updates with Uptane | Director and image repositories, role separation, compromise recovery | Uptane Standard 2.x |
-| UDS authentication | Challenge-response for diagnostic service 0x29 vs legacy 0x27 seed/key | ISO 14229-1:2020 |
-| V2X message signing | Pseudonym certificates and signed basic safety messages | IEEE 1609.2 |
-| Threat-model write-up | TARA walkthrough for one of the apps above | ISO/SAE 21434 |
+| Signed OTA updates with TUF | Role separation, threshold signatures, key rotation and compromise recovery for device updates | TUF specification 1.0 |
 
 ## 4. Other ideas
 
@@ -43,7 +39,7 @@ Candidate projects, grouped by theme. Order within a group is a rough suggested 
 
 ## Cross-cutting work
 
-- [x] Pick languages (Rust for core, embedded and Wasm demos; C for ECU-side components; Python for teaching notebooks; see `CLAUDE.md`)
+- [x] Pick languages (Rust for core, embedded and Wasm demos; Python for teaching notebooks; see `CLAUDE.md`)
 - [x] Choose a license (Apache-2.0)
 - [ ] CI: build, unit tests, known-answer tests, Wycheproof, `cargo audit` / `pip-audit`
 - [ ] Shared test-vector fetcher under `vectors/`
