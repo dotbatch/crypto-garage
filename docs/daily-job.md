@@ -20,7 +20,7 @@ Stop at the first step that fails and report why. Never work around a failure.
 
 1. `git status` must be clean and on `main`. If not, stop: Adrik has local work in progress.
 2. `git pull --ff-only origin main`.
-3. `gh auth status` must succeed, and the toolchain for the work must be installed (`cargo`, `rustup` for Rust work). If missing, stop and say what to install.
+3. `gh auth status` must succeed, and the toolchain for the work must be installed (`cargo`, `rustup` for Rust work; `uv` with Python 3.12+ for Python scripts). If missing, stop and say what to install.
 
 ### 2. Reconcile yesterday's work
 
