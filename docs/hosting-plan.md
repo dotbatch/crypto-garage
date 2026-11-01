@@ -26,7 +26,7 @@ pq.<domain>      (VPS)                <- later: hybrid PQ TLS server
 
 **Decided:** `udcio.com`, with `garage.udcio.com` for the site and `pq.udcio.com` for the VPS endpoint. pixsol.net and pxibit.com are live business sites and stay as they are. See [deployment-plan.md](deployment-plan.md) for details and DNS steps.
 
-- Avoid employer names (e.g. GM) and anything that reads as cryptocurrency.
+- Avoid employer names and anything that reads as cryptocurrency.
 
 ## Site structure
 

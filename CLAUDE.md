@@ -1,6 +1,6 @@
 # Claude Code Guidelines for crypto-garage
 
-crypto-garage is a public portfolio of cryptography apps: proven primitives, post-quantum algorithms, and vehicle-security demos. Everything here is read by strangers and judged as the work of a security professional. Correctness and clarity beat cleverness.
+crypto-garage is a public portfolio of cryptography apps: proven primitives, post-quantum algorithms, and embedded/IoT security demos. Everything here is read by strangers and judged as the work of a security professional. Correctness and clarity beat cleverness.
 
 ## Code Change Philosophy
 
@@ -40,7 +40,8 @@ These come first. Breaking one is a bug even if the tests pass.
 
 ## Public Repo Rules
 
-- **Public sources only.** Automotive work uses public standards (AUTOSAR, ISO 14229, ISO/SAE 21434, IEEE 1609.2, Uptane). Nothing from any employer: no internal names, part numbers, tools, keys or architecture
+- **Public sources only.** Nothing from any employer: no internal names, part numbers, tools, keys or architecture
+- **No automotive-specific work.** Embedded demos stay generic (microcontrollers, firmware, IoT updates). No vehicle buses, diagnostics, V2X or automotive standards, to avoid any conflict of interest with the author's employer
 - **No secrets in the repo.** No real keys, tokens, passwords, VPS IPs or hostnames beyond the public ones in `docs/`. Test keys are generated at runtime or clearly marked test-only in `vectors/`
 - **Don't change live business sites.** pixsol.net and pxibit.com run on the same VPS; nothing in this repo touches them
 
@@ -77,7 +78,6 @@ This repo is a public record. Every shortcut is visible, and the patterns here w
 
 ### Tech Stack
 - Core and embedded: Rust (stable), formatted with `rustfmt`, linted with `clippy -D warnings`
-- Automotive ECU-side components (e.g. SecOC or secure-boot verifiers): C (C11 or C17), built on a vetted C library such as mbedTLS or wolfSSL, formatted with `clang-format`, checked with `clang-tidy` and `cppcheck`, and tested under AddressSanitizer and UndefinedBehaviorSanitizer. Use C only where it reflects how real ECUs are built; everything else stays in Rust
 - Browser demos: Rust compiled to WebAssembly (`wasm32-unknown-unknown`) with `wasm-bindgen` and built with `wasm-pack`, formatted with `rustfmt`, linted with `clippy -D warnings` for the Wasm target
 - Teaching notebooks and scripts: Python 3.12+, managed with `uv`, formatted and linted with `ruff` (`ruff format`, `ruff check`)
 - Site: Zola, deployed to GitHub Pages. Templates and content are checked with `zola check`; Markdown is linted with `markdownlint`
