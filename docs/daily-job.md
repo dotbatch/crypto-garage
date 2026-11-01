@@ -8,7 +8,7 @@ A scheduled Claude Code task that works on one Jira item per day and opens one p
 |---|---|
 | Repo | `github.com/dotbatch/crypto-garage`, local checkout `E:\Development\Adrik\crypto-planning` |
 | Jira site | `pixsol.atlassian.net`, project `FAM` (Crypto Garage) |
-| Jira transitions | `11` = Start Progress (→ In Progress), `21` = Done |
+| Jira transitions | Look up by name (Start Progress, Done) with the item's available transitions. IDs depend on the current status: Done is `21` from To Do but `41` from In Progress |
 | Branch name | `fam-<number>-<short-slug>`, e.g. `fam-24-tech-stack` |
 | Skip label | `needs-human` |
 
@@ -20,13 +20,13 @@ Stop at the first step that fails and report why. Never work around a failure.
 
 1. `git status` must be clean and on `main`. If not, stop: Adrik has local work in progress.
 2. `git pull --ff-only origin main`.
-3. `gh auth status` must succeed, and the toolchain for the work must be installed (`cargo`, `rustup` for Rust work). If missing, stop and say what to install.
+3. `gh auth status` must succeed, and the toolchain for the work must be installed (`cargo`, `rustup` for Rust work; `uv` with Python 3.12+ for Python scripts). If missing, stop and say what to install.
 
 ### 2. Reconcile yesterday's work
 
 1. Find FAM Sub-tasks in **In Progress**.
 2. For each, look up its PR with `gh pr list --state all --head <branch>`:
-   - **Merged** → apply transition `21` (Done) and comment "Merged in <PR link>".
+   - **Merged** → apply the transition named Done and comment "Merged in <PR link>".
    - **Open** → stop for today. Only one job PR is open at a time; report that it is waiting for review.
    - **Closed without merging** → comment on the Jira item asking Adrik what to change, leave it In Progress, and stop for today.
 
@@ -65,7 +65,7 @@ If the item can't be finished because something it depends on isn't done (for ex
 3. `gh pr create --base main` with:
    - **Title:** `type: summary (FAM-<number>)`
    - **Body:** what changed and why; how it was verified (commands run and results); anything left for later; link to `https://pixsol.atlassian.net/browse/FAM-<number>`; ending with `🤖 Generated with [Claude Code](https://claude.com/claude-code)`.
-4. Jira: apply transition `11` (In Progress) and comment with the PR link.
+4. Jira: apply the transition named Start Progress (→ In Progress) and comment with the PR link.
 5. `git switch main`.
 
 ### 6. Report
