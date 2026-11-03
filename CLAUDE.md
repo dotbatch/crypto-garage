@@ -86,7 +86,7 @@ This repo is a public record. Every shortcut is visible, and the patterns here w
 ```
 apps/      Showcase apps, one folder per project, each with its own README
 learn/     Educational from-scratch implementations (not for production)
-vectors/   Test vectors and the scripts that fetch them (never hand-edited)
+vectors/   Test vectors (never hand-edited), their fetch script and the Rust loader crate
 site/      Showcase website source (planned)
 deploy/    VPS deployment config (planned)
 docs/      Plans, write-ups, threat models
@@ -99,7 +99,7 @@ docs/      Plans, write-ups, threat models
 - Run the formatter, linter and tests before committing
 
 ### Boundaries: Never Modify
-- Files in `vectors/` by hand. Regenerate them with their fetch scripts
+- Vector files in `vectors/` by hand. Regenerate them with their fetch scripts
 - `LICENSE`
 - Lock files (`Cargo.lock`, `uv.lock`, etc.) except through the package manager
 - GitHub repo settings, DNS, or the VPS without asking first

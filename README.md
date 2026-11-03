@@ -18,7 +18,7 @@ Hands-on apps that show modern cryptography working, from the proven primitives 
 ```
 apps/      Showcase apps, one folder per project
 learn/     Educational from-scratch implementations (not for production)
-vectors/   Test vectors and the scripts that fetch them
+vectors/   Test vectors, their fetch script and the Rust crate that loads them
 docs/      Write-ups, threat models, design notes
 ```
 

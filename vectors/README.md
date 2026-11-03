@@ -16,6 +16,29 @@ its checksum, the script exits with an error and writes nothing for that file. T
 the file lists and the checksums are at the top of
 [`fetch_vectors.py`](fetch_vectors.py).
 
+## Using vectors in Rust tests
+
+This directory is also the `vectors` crate, which loads the files into typed structs. Add it as a
+dev-dependency:
+
+```toml
+[dev-dependencies]
+vectors = { path = "../../vectors" }
+```
+
+Then a test runs every case of a file in one loop:
+
+```rust
+use vectors::wycheproof::AeadFile;
+
+for (group, test) in AeadFile::load("wycheproof/aes_gcm_test.json").cases() {
+    // group: key, IV and tag sizes; test: key, iv, aad, msg, ct, tag and the expected result
+}
+```
+
+Paths are relative to `vectors/`. `vectors::wycheproof` has one file type per Wycheproof schema,
+and `vectors::acvp` one per ACVP set listed below.
+
 ## Wycheproof
 
 [`wycheproof/`](wycheproof/) holds JSON test vectors from
