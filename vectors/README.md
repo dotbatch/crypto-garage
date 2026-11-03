@@ -16,6 +16,9 @@ its checksum, the script exits with an error and writes nothing for that file. T
 the file lists and the checksums are at the top of
 [`fetch_vectors.py`](fetch_vectors.py).
 
+CI runs the script before the tests, so a vector file that doesn't match its checksum fails the
+build.
+
 ## Using vectors in Rust tests
 
 This directory is also the `vectors` crate, which loads the files into typed structs. Add it as a
