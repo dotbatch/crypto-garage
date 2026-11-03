@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["apps/*", "learn/*"]
+members = ["apps/*", "learn/*", "vectors"]
 
 # Shared by every crate via `edition.workspace = true` and friends.
 [workspace.package]
