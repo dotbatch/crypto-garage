@@ -30,7 +30,7 @@ These come first. Breaking one is a bug even if the tests pass.
 
 - **No home-grown primitives in `apps/`.** Use vetted libraries: RustCrypto, libsodium, AWS-LC, OpenSSL 3.5+, liboqs. From-scratch implementations go only in `learn/`, with a "not for production" banner at the top of each file
 - **Every primitive is tested against known answers.** NIST ACVP/CAVP vectors, RFC vectors and Wycheproof cases from `vectors/`. A new algorithm isn't done until its vectors pass in CI
-- **Cite the standard.** Each app's README names the FIPS, SP, RFC or ISO document it follows, with the version
+- **Cite the standard.** Each app's README names the FIPS, SP, RFC or ISO document it follows, with the version. App READMEs follow [docs/app-template.md](docs/app-template.md)
 - **Randomness comes from the OS CSPRNG only** (`getrandom`, `OsRng`, `crypto.getRandomValues`). Never `rand()`, `Math.random()` or time-based seeds
 - **Compare secrets in constant time.** Never `==` on MACs, tags or hashes of secrets
 - **Never log, print or `Debug`-format key material.** Zeroize secrets when the language supports it (e.g. `zeroize` in Rust)
