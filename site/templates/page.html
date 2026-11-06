@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} · {{ config.title }}{% endblock %}
+
+{# Minimal project page until the full project template lands. #}
+{% block content %}
+<article>
+  <h1>{{ page.title }}</h1>
+  <p>{{ page.description }}</p>
+  <p class="meta">
+    Standards: {{ page.extra.standards | join(sep=", ") }}.
+    Status: {{ page.extra.status }}.
+  </p>
+  {{ page.content | safe }}
+</article>
+{% endblock %}

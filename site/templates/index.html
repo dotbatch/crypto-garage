@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="intro">
+  <h1>{{ section.title }}</h1>
+  {{ section.content | safe }}
+</section>
+
+<section aria-labelledby="projects-heading">
+  <h2 id="projects-heading">Projects</h2>
+  {# Cards come from the front matter of each page in content/projects/, ordered by weight. #}
+  {% set projects = get_section(path="projects/_index.md") %}
+  <ul class="project-grid">
+    {% for project in projects.pages %}
+    <li class="card">
+      <h3><a href="{{ project.permalink }}">{{ project.title }}</a></h3>
+      <p>{{ project.description }}</p>
+      <p class="meta">
+        {{ project.extra.standards | join(sep=" · ") }}
+        <span class="status">{{ project.extra.status }}</span>
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

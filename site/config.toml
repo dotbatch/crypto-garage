@@ -1,0 +1,12 @@
+base_url = "https://garage.udcio.com"
+title = "crypto-garage"
+description = "Hands-on apps that show modern cryptography working, from proven primitives to post-quantum algorithms."
+default_language = "en"
+
+# Everything is served from this site: no Sass pipeline, search index or feeds to pull in extra assets.
+compile_sass = false
+build_search_index = false
+generate_feeds = false
+
+[extra]
+repo_url = "https://github.com/dotbatch/crypto-garage"

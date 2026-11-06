@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ config.default_language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ config.title }}{% endblock %}</title>
+  <meta name="description" content="{{ config.description }}">
+  {# Only same-origin assets: no external scripts, fonts or stylesheets. #}
+  <link rel="stylesheet" href="{{ get_url(path='style.css', cachebust=true) }}">
+</head>
+<body>
+  <header>
+    <a class="site-name" href="{{ config.base_url }}/">{{ config.title }}</a>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    <a href="{{ config.extra.repo_url }}">Source on GitHub</a>
+  </footer>
+</body>
+</html>

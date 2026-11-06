@@ -87,7 +87,7 @@ This repo is a public record. Every shortcut is visible, and the patterns here w
 apps/      Showcase apps, one folder per project, each with its own README
 learn/     Educational from-scratch implementations (not for production)
 vectors/   Test vectors (never hand-edited), their fetch script and the Rust loader crate
-site/      Showcase website source (planned)
+site/      Showcase website source (Zola)
 deploy/    VPS deployment config (planned)
 docs/      Plans, write-ups, threat models
 ```
