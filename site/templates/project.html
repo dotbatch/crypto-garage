@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} · {{ config.title }}{% endblock %}
+
+{% block content %}
+<article>
+  <h1>{{ page.title }}</h1>
+
+  <section>
+    <h2>What it is</h2>
+    <p>{{ page.description }}</p>
+    <p class="meta">
+      Standards: {{ page.extra.standards | join(sep=", ") }}.
+      Status: {{ page.extra.status }}.
+    </p>
+  </section>
+
+  <section>
+    <h2>Live demo</h2>
+    {# A project with a demo overrides this block in its own template. #}
+    {% block demo %}
+    <p>The demo isn't built yet.</p>
+    {% endblock %}
+  </section>
+
+  <section>
+    <h2>How it works and how it breaks</h2>
+    {% if page.content %}
+    {{ page.content | safe }}
+    {% else %}
+    <p>The write-up isn't written yet.</p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Code</h2>
+    {# Set extra.code only once the app exists, so a planned project never has a dead link. #}
+    {% if page.extra.code %}
+    <p>
+      <a href="{{ config.extra.repo_url }}/tree/main/{{ page.extra.code }}">
+        {{ page.extra.code }} on GitHub
+      </a>
+    </p>
+    {% else %}
+    <p>
+      The code isn't written yet. Follow the
+      <a href="{{ config.extra.repo_url }}">repository</a> for progress.
+    </p>
+    {% endif %}
+  </section>
+</article>
+{% endblock %}
