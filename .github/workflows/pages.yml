@@ -1,0 +1,92 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", "apps/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+# No default access: each job asks for only what it needs.
+permissions: {}
+
+# Queue deploys rather than cancelling one partway through.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # A failing test must block the deploy. CI runs as its own workflow on the same push, so wait for
+  # its result on this exact commit instead of running the checks a second time.
+  ci:
+    name: wait for CI
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - run: |
+          # The CI run may not be registered yet when this job starts.
+          for _ in $(seq 30); do
+            run_id=$(gh run list --workflow ci.yml --commit "$GITHUB_SHA" --event push \
+              --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+            [ -n "$run_id" ] && break
+            sleep 10
+          done
+          if [ -z "$run_id" ]; then
+            echo "::error::No CI run found for $GITHUB_SHA"
+            exit 1
+          fi
+          gh run watch "$run_id" --exit-status --interval 30 > /dev/null
+
+  build:
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    env:
+      # Taken from the release's published asset digest. Dependabot doesn't track these two lines.
+      ZOLA_VERSION: v0.23.6
+      ZOLA_SHA256: 8f5132b3522412d04e395e0b25f6d68613ad272a873e54a2b3ebf664873024a4
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Zola
+        working-directory: ${{ runner.temp }}
+        run: |
+          tarball="zola-$ZOLA_VERSION-x86_64-unknown-linux-gnu.tar.gz"
+          curl -fsSLO "https://github.com/getzola/zola/releases/download/$ZOLA_VERSION/$tarball"
+          echo "$ZOLA_SHA256  $tarball" | sha256sum --check
+          tar -xzf "$tarball"
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+      - id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      # Use the URL Pages reports, so links are right on both the default github.io address and the
+      # custom domain.
+      - name: Build site
+        working-directory: site
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: zola build --base-url "$BASE_URL"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    # OIDC: Pages trusts a short-lived token from this run, so no secret is stored.
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
