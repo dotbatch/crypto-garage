@@ -50,27 +50,26 @@ on:
     paths: ["site/**", "apps/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: {}  # each job asks for only what it needs
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:      # checkout, build Wasm demos, build site, upload-pages-artifact
+  ci:         # wait for the CI run on this commit; a failure stops here
+  build:      # needs: ci; checkout, build Wasm demos, build site, upload-pages-artifact
   deploy:     # needs: build; environment: github-pages; deploy-pages
   smoke:      # needs: deploy; curl the live URL and check status + headers
 ```
 
-- [ ] Pin every third-party action to a full commit SHA, not a tag (supply-chain hardening; worth a line on the site)
-- [ ] Turn on Dependabot for GitHub Actions so the pinned SHAs get update PRs
+- [x] Pin every third-party action to a full commit SHA, not a tag (supply-chain hardening; worth a line on the site)
+- [x] Turn on Dependabot for GitHub Actions so the pinned SHAs get update PRs
 
 ### One-time setup
 
 1. [ ] Repo Settings → Pages → Source: **GitHub Actions**
+   Do this before `pages.yml` first runs on `main`, or the build job fails
 2. [ ] Repo Settings → Environments → `github-pages`: allow deploys from `main` only
 3. [ ] Account Settings → Pages → **Verify domain** `udcio.com`. GitHub gives a TXT record to add at Namecheap (`_github-pages-challenge-dotbatch.udcio.com`). This stops anyone else claiming the domain on Pages
 4. [ ] Namecheap DNS: `CNAME garage → dotbatch.github.io`
