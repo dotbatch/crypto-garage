@@ -62,6 +62,7 @@ outputs of every case:
 | `ML-DSA-keyGen-FIPS204` | ML-DSA-44/65/87 key generation | FIPS 204 (August 2024) |
 | `ML-DSA-sigGen-FIPS204` | ML-DSA signing | FIPS 204 (August 2024) |
 | `ML-DSA-sigVer-FIPS204` | ML-DSA verification, including invalid signatures | FIPS 204 (August 2024) |
+| `SHA2-256-1.0` | SHA-256 hashing | FIPS 180-4 (August 2015) |
 
 The keys in these files are public test data from NIST, not secrets. ACVP-Server is NIST-developed
 software provided as a public service; its README asks that NIST be acknowledged as the source.

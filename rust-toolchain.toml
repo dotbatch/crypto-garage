@@ -1,3 +1,5 @@
 [toolchain]
 channel = "stable"
 components = ["rustfmt", "clippy"]
+# Browser demos in apps/ build for this target.
+targets = ["wasm32-unknown-unknown"]

@@ -50,3 +50,16 @@ footer {
   float: right;
   text-transform: capitalize;
 }
+
+.demo textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font: inherit;
+}
+
+/* A 64-character digest has no spaces, so let it wrap on narrow screens. */
+.demo output {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  overflow-wrap: anywhere;
+}

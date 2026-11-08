@@ -33,6 +33,8 @@ jobs:
       - run: uv run vectors/fetch_vectors.py
       - run: cargo fmt --all --check
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      # Browser demos also build for Wasm, where the code compiled differs (wasm-bindgen glue).
+      - run: cargo clippy -p hello-wasm --target wasm32-unknown-unknown --locked -- -D warnings
       - run: cargo test --workspace --locked
 
   deny:
