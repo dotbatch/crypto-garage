@@ -206,6 +206,40 @@ pub struct MlDsaSigVerTest {
     pub reason: String,
 }
 
+/// `SHA2-256-1.0`: SHA-256 per FIPS 180-4.
+pub type Sha2File = TestFile<Sha2Group, Sha2Test>;
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Sha2Group {
+    pub tg_id: u32,
+    pub test_type: Sha2TestType,
+}
+
+/// Which kind of test a group holds. It decides which optional test fields are set.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum Sha2TestType {
+    /// Algorithm functional test: hash `msg`, expect `md`.
+    Aft,
+    /// Monte Carlo test: chained hashing from `msg`. Its results aren't loaded here.
+    Mct,
+    /// Large data test: an 8 GiB message described by a pattern, not stored. Gives `md` only.
+    Ldt,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Sha2Test {
+    pub tc_id: u32,
+    /// Message length in bits. Zero for LDT cases.
+    pub len: usize,
+    /// Set for AFT and MCT.
+    pub msg: Option<Bytes>,
+    /// Set for AFT and LDT.
+    pub md: Option<Bytes>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -240,6 +274,7 @@ mod tests {
                 .count(),
             180
         );
+        assert_eq!(Sha2File::load(&path("SHA2-256-1.0")).cases().count(), 517);
     }
 
     #[test]
@@ -287,5 +322,24 @@ mod tests {
             assert_eq!(test.context.is_some(), external, "tcId {}", test.tc_id);
         }
         assert!(file.cases().any(|(_, test)| !test.test_passed));
+    }
+
+    // The optional fields documented on Sha2Test are set exactly as described, and AFT messages
+    // are whole bytes, so a byte-oriented hash API can run them all.
+    #[test]
+    fn sha2_fields_match_the_test_type() {
+        let file = Sha2File::load("acvp/SHA2-256-1.0/internalProjection.json");
+        for (group, test) in file.cases() {
+            let fields = (test.msg.is_some(), test.md.is_some());
+            let expected = match group.test_type {
+                Sha2TestType::Aft => (true, true),
+                Sha2TestType::Mct => (true, false),
+                Sha2TestType::Ldt => (false, true),
+            };
+            assert_eq!(fields, expected, "tcId {}", test.tc_id);
+            if let Some(msg) = &test.msg {
+                assert_eq!(msg.len() * 8, test.len, "tcId {}", test.tc_id);
+            }
+        }
     }
 }

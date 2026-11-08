@@ -80,6 +80,9 @@ SOURCES = [
             "ML-DSA-sigVer-FIPS204/internalProjection.json": (
                 "47cdd6314c7f746d02421ffcba89d4dbc7bb875ac49e07a029fdfc26fba55437"
             ),
+            "SHA2-256-1.0/internalProjection.json": (
+                "a7e0bf4f5c661f1787b343bf3ae1a809b1e62f8fb2c8a627791510d03a570a6c"
+            ),
         },
     ),
 ]
