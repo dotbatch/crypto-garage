@@ -1,0 +1,25 @@
+[package]
+name = "hello-wasm"
+version = "0.0.0"
+description = "SHA-256 of typed text, compiled to WebAssembly: the site's first in-browser demo"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lib]
+# cdylib is the .wasm module the browser loads; rlib lets the native tests link the crate.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+hex = "0.4.3"
+sha2 = "0.11.1"
+wasm-bindgen = "0.2.130"
+
+[dev-dependencies]
+vectors = { path = "../../vectors" }
+
+# Skip wasm-opt: wasm-pack would download an unpinned binaryen release to run it, and the module
+# is already small.
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
