@@ -23,8 +23,9 @@ venv/
 node_modules/
 dist/
 
-# Zola build output
+# Zola build output, and Wasm demo modules built into the site by wasm-pack
 site/public/
+site/static/demos/*/pkg/
 
 # Embedded builds
 build/
