@@ -1,0 +1,12 @@
+{% extends "project.html" %}
+
+{% block demo %}
+<div class="demo">
+  <label for="hello-input">Text</label>
+  <textarea id="hello-input" rows="3" spellcheck="false">abc</textarea>
+  <p>SHA-256: <output id="hello-output" for="hello-input">loading…</output></p>
+</div>
+<noscript><p>The demo needs JavaScript and WebAssembly.</p></noscript>
+{# A module script from this site, not inline, so a strict CSP can allow it by origin. #}
+<script type="module" src="{{ get_url(path='demos/hello-wasm/demo.js', cachebust=true) }}"></script>
+{% endblock %}
