@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <!-- A padlock. Served from this site so the browser doesn't request a missing /favicon.ico. -->
+  <path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="#0b57d0" stroke-width="2"/>
+  <rect x="2" y="7" width="12" height="8" rx="1.5" fill="#0b57d0"/>
+</svg>
