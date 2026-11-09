@@ -1,3 +1,23 @@
+/* Colors follow the reader's system setting. Each pair meets WCAG AA contrast on its background. */
+:root {
+  color-scheme: light dark;
+  --text: #1a1a1a;
+  --background: #fff;
+  --link: #0b57d0;
+  --muted: #555;
+  --border: #d0d0d0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e6e6e6;
+    --background: #121212;
+    --link: #8ab4f8;
+    --muted: #a8a8a8;
+    --border: #3c3c3c;
+  }
+}
+
 /* System fonts only: the site loads nothing from other origins. */
 body {
   margin: 0 auto;
@@ -5,12 +25,12 @@ body {
   padding: 1rem;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #fff;
+  color: var(--text);
+  background: var(--background);
 }
 
 a {
-  color: #0b57d0;
+  color: var(--link);
 }
 
 header,
@@ -38,7 +58,7 @@ header {
 
 .card {
   padding: 1rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
 }
 
@@ -48,7 +68,7 @@ header {
 
 .meta {
   font-size: 0.875rem;
-  color: #555;
+  color: var(--muted);
 }
 
 .status {
