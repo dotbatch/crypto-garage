@@ -18,6 +18,11 @@ footer {
   padding: 1rem 0;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .site-name {
   font-weight: 700;
   text-decoration: none;

@@ -16,6 +16,8 @@ Each project page renders from `templates/project.html` with four sections:
 
 A section with nothing to show yet says so.
 
+Other pages, such as `content/about.md`, render from `templates/page.html`.
+
 The site loads nothing from other origins: no external scripts, fonts or stylesheets.
 
 ## Build
