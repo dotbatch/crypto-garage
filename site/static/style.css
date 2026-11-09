@@ -33,6 +33,25 @@ a {
   color: var(--link);
 }
 
+/* One focus ring for links and form controls, visible in both color schemes. */
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+/* Off screen until it receives keyboard focus. */
+.skip-link {
+  position: absolute;
+  left: -100vw;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  padding: 0.5rem;
+  background: var(--background);
+}
+
 header,
 footer {
   padding: 1rem 0;
