@@ -20,6 +20,12 @@ Other pages, such as `content/about.md`, render from `templates/page.html`.
 
 The site loads nothing from other origins: no external scripts, fonts or stylesheets.
 
+Every page carries a Content Security Policy in a `<meta>` tag (`templates/base.html`), since
+Pages can't set headers. By default it allows only this site's styles and images, and no scripts.
+A demo template that loads scripts adds the directives it needs in a `csp_scripts` block, as
+`templates/hello-wasm.html` does. Scripts go in files under `static/`, never inline, because the
+policy has no `'unsafe-inline'`.
+
 Colors are custom properties at the top of `static/style.css`, with a second set for dark mode.
 Give any new color a value in both sets, with at least 4.5:1 contrast against the background.
 

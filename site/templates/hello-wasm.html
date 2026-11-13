@@ -1,5 +1,9 @@
 {% extends "project.html" %}
 
+{# Run this site's scripts, compile Wasm ('wasm-unsafe-eval' allows that and nothing else, unlike
+   'unsafe-eval'), and fetch the .wasm file from this site. #}
+{% block csp_scripts %}; script-src 'self' 'wasm-unsafe-eval'; connect-src 'self'{% endblock %}
+
 {% block demo %}
 <div class="demo">
   <label for="hello-input">Text</label>
