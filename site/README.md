@@ -20,6 +20,9 @@ Other pages, such as `content/about.md`, render from `templates/page.html`.
 
 The site loads nothing from other origins: no external scripts, fonts or stylesheets.
 
+Colors are custom properties at the top of `static/style.css`, with a second set for dark mode.
+Give any new color a value in both sets, with at least 4.5:1 contrast against the background.
+
 ## Build
 
 From this directory:

@@ -7,13 +7,16 @@
   <meta name="description" content="{{ config.description }}">
   {# Only same-origin assets: no external scripts, fonts or stylesheets. #}
   <link rel="stylesheet" href="{{ get_url(path='style.css', cachebust=true) }}">
+  <link rel="icon" href="{{ get_url(path='favicon.svg') }}" type="image/svg+xml">
 </head>
 <body>
+  {# First in tab order, so keyboard users can jump past the header. #}
+  <a class="skip-link" href="#main">Skip to content</a>
   <header>
     <a class="site-name" href="{{ config.base_url }}/">{{ config.title }}</a>
     <nav><a href="{{ get_url(path='@/about.md') }}">About</a></nav>
   </header>
-  <main>
+  <main id="main">
     {% block content %}{% endblock %}
   </main>
   <footer>
