@@ -38,7 +38,7 @@ push to main ──> ci.yml (same checks)
 ```
 
 - Deploys only from `main`, and only after CI passes. A failing test blocks the deploy.
-- `paths:` filter: the Pages workflow runs only when `site/`, `apps/`, `Cargo.lock` or the workflow itself changes.
+- `paths:` filter: the Pages workflow runs only when `site/`, `apps/`, `Cargo.lock`, the workflow itself or its smoke check changes.
 - No secrets needed. Pages deploys through GitHub's OIDC token (`id-token: write`).
 
 ### Workflow outline (`.github/workflows/pages.yml`)
@@ -47,7 +47,12 @@ push to main ──> ci.yml (same checks)
 on:
   push:
     branches: [main]
-    paths: ["site/**", "apps/**", "Cargo.lock", ".github/workflows/pages.yml"]
+    paths:
+      - "site/**"
+      - "apps/**"
+      - "Cargo.lock"
+      - ".github/workflows/pages.yml"
+      - ".github/scripts/smoke.sh"
   workflow_dispatch:
 
 permissions: {}  # each job asks for only what it needs

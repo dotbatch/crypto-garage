@@ -2,6 +2,13 @@
 <html lang="{{ config.default_language }}">
 <head>
   <meta charset="utf-8">
+  {# Pages can't set response headers, so the CSP goes in a meta tag, before anything it governs.
+     By default a page may load only this site's styles and images, and no scripts at all. A page
+     that runs a demo adds what it needs in the csp_scripts block. #}
+  {% set csp = "default-src 'none'; style-src 'self'; img-src 'self'" %}
+  {% set csp = csp ~ "; base-uri 'none'; form-action 'none'" %}
+  <meta http-equiv="Content-Security-Policy"
+    content="{{ csp | safe }}{% block csp_scripts %}{% endblock %}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ config.title }}{% endblock %}</title>
   <meta name="description" content="{{ config.description }}">

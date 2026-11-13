@@ -3,7 +3,12 @@ name: Pages
 on:
   push:
     branches: [main]
-    paths: ["site/**", "apps/**", "Cargo.lock", ".github/workflows/pages.yml"]
+    paths:
+      - "site/**"
+      - "apps/**"
+      - "Cargo.lock"
+      - ".github/workflows/pages.yml"
+      - ".github/scripts/smoke.sh"
   workflow_dispatch:
 
 # No default access: each job asks for only what it needs.
@@ -111,3 +116,17 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  # A finished deploy only means Pages accepted the upload. Check the live site serves it over
+  # HTTPS with the CSP in place, and that the Wasm demo's module loads.
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: bash .github/scripts/smoke.sh
