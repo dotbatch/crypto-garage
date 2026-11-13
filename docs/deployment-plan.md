@@ -6,7 +6,7 @@ How code in this repo reaches the public. Builds on [hosting-plan.md](hosting-pl
 
 | Domain | Today | Use |
 |---|---|---|
-| `udcio.com` | DNS at Namecheap; points at a server with no website | **Showcase.** Clean, neutral, not tied to the business sites |
+| `udcio.com` | Registered at Namecheap, but its DNS zone is served by the GoDaddy VPS (WHM name servers); points at that VPS with no website | **Showcase.** Clean, neutral, not tied to the business sites |
 | `pixsol.net` | Live "Pix Sol" site on the GoDaddy VPS | Leave alone |
 | `pxibit.com` | Live small-business web services site on the GoDaddy VPS | Leave alone. Optionally link to the showcase |
 
@@ -68,13 +68,15 @@ jobs:
 
 ### One-time setup
 
+"udcio.com DNS" below means the zone in WHM → DNS Functions → Zone Editor on the VPS, because that is where the domain's name servers point. Records added in Namecheap's panel have no effect unless the name servers are moved back to Namecheap first. The zone sits beside the live business sites' zones, so change only `udcio.com`.
+
 1. [ ] Repo Settings → Pages → Source: **GitHub Actions**
    Do this before `pages.yml` first runs on `main`, or the build job fails
 2. [ ] Repo Settings → Environments → `github-pages`: allow deploys from `main` only
-3. [ ] Account Settings → Pages → **Verify domain** `udcio.com`. GitHub gives a TXT record to add at Namecheap (`_github-pages-challenge-dotbatch.udcio.com`). This stops anyone else claiming the domain on Pages
-4. [ ] Namecheap DNS: `CNAME garage → dotbatch.github.io`
+3. [ ] Account Settings → Pages → **Verify domain** `udcio.com`. GitHub gives a TXT record to add in udcio.com DNS (`_github-pages-challenge-dotbatch.udcio.com`). This stops anyone else claiming the domain on Pages
+4. [ ] udcio.com DNS: `CNAME garage → dotbatch.github.io`
 5. [ ] Repo Settings → Pages → Custom domain: `garage.udcio.com`, wait for the certificate, then **Enforce HTTPS**
-6. [ ] Namecheap DNS: `CAA 0 issue "letsencrypt.org"` on `udcio.com` (GitHub Pages and the VPS both use Let's Encrypt)
+6. [ ] udcio.com DNS: `CAA 0 issue "letsencrypt.org"` on `udcio.com` (GitHub Pages uses Let's Encrypt). First check which CA cPanel AutoSSL uses for `udcio.com` (WHM → Manage AutoSSL): if it is Sectigo, switch it to Let's Encrypt or also add `CAA 0 issue "sectigo.com"`, or the domain's own certificate stops renewing
 7. [ ] Branch protection on `main`: require CI to pass before merge
 
 ### Rollback
@@ -100,7 +102,7 @@ Options, in order of preference:
 - [ ] Choose option 1, 2 or 3 above
 - [ ] Build or install nginx/Caddy against OpenSSL 3.5+ or AWS-LC; run as its own systemd service or container, separate from cPanel
 - [ ] Let's Encrypt certificate for `pq.udcio.com`
-- [ ] Namecheap DNS: `A pq → <PQ server IP>`
+- [ ] udcio.com DNS: `A pq → <PQ server IP>`
 - [ ] Page that reports the negotiated TLS group to the visitor
 - [ ] Verify: `openssl s_client -connect pq.udcio.com:443 -groups X25519MLKEM768`, plus current Chrome and Firefox
 - [ ] Apply the hardening checklist in [hosting-plan.md](hosting-plan.md)

@@ -43,7 +43,7 @@ pq.<domain>      (VPS)                <- later: hybrid PQ TLS server
 - [ ] Create `site/` in the repo
 - [ ] Add a GitHub Actions workflow that builds `site/` (and any Wasm demos) and deploys to Pages; use a `paths:` filter so it only runs when `site/` or `apps/` change
 - [ ] Settings → Pages: source = GitHub Actions
-- [ ] Add the custom domain in Settings → Pages, then a `CNAME` DNS record at Namecheap (udcio.com's DNS host) pointing the subdomain to `dotbatch.github.io`
+- [ ] Add the custom domain in Settings → Pages, then a `CNAME` DNS record in udcio.com's zone on the VPS (WHM; its name servers point there, not at Namecheap) pointing the subdomain to `dotbatch.github.io`
 - [ ] Verify the domain in GitHub account settings (stops anyone else claiming it on Pages)
 - [ ] Turn on "Enforce HTTPS"
 - [ ] Add a Content Security Policy via `<meta>` tag (Pages cannot set custom headers); allow `wasm-unsafe-eval` only where Wasm demos need it
