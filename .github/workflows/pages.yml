@@ -47,7 +47,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pages: read
     env:
       # Taken from the releases' published asset digests. Dependabot doesn't track these lines.
       ZOLA_VERSION: v0.23.6
@@ -89,15 +88,12 @@ jobs:
           echo "$ZOLA_SHA256  $tarball" | sha256sum --check
           tar -xzf "$tarball"
           echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
-      - id: pages
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-      # Use the URL Pages reports, so links are right on both the default github.io address and the
-      # custom domain.
+      # Links come from base_url in config.toml, always https. The URL Pages reports follows its
+      # Enforce HTTPS setting, so a build made while that was off linked http:// assets that
+      # browsers block as mixed content. The github.io address redirects to the custom domain.
       - name: Build site
         working-directory: site
-        env:
-          BASE_URL: ${{ steps.pages.outputs.base_url }}
-        run: zola build --base-url "$BASE_URL"
+        run: zola build
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site/public
