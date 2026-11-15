@@ -6,18 +6,28 @@ Encrypts and authenticates messages with AES-256-GCM or ChaCha20-Poly1305, with 
 
 The first half of the AEAD playground: a small crate that shows the whole seal and open cycle
 (key, random nonce, associated data, tag check) with the nonce choice written out in the code.
-The browser page and the known-answer tests come in later items.
+The browser page comes in a later item.
 
 ## Standard
 
 | Primitive | Standard | Library | Vectors |
 |---|---|---|---|
-| AES-256-GCM | NIST SP 800-38D (November 2007) | `aes-gcm` 0.11.1 (RustCrypto) | ACVP `ACVP-AES-GCM-1.0`, Wycheproof `aes_gcm_test.json` (in a later item) |
-| ChaCha20-Poly1305 | RFC 8439 (June 2018) | `chacha20poly1305` 0.11.0 (RustCrypto) | Wycheproof `chacha20_poly1305_test.json`, RFC 8439 section 2.8.2 (in a later item) |
+| AES-256-GCM | NIST SP 800-38D (November 2007) | `aes-gcm` 0.11.1 (RustCrypto) | Wycheproof `aes_gcm_test.json` |
+| ChaCha20-Poly1305 | RFC 8439 (June 2018) | `chacha20poly1305` 0.11.0 (RustCrypto) | Wycheproof `chacha20_poly1305_test.json`, RFC 8439 section 2.8.2 and appendix A.5 |
 | Randomness | OS CSPRNG via `getrandom` 0.4.3 | `getrandom` 0.4.3 | n/a |
 
 Both ciphers use 256-bit keys and 96-bit nonces. The tag is 16 bytes and is appended to the
 ciphertext.
+
+The known-answer tests in `src/known_answers.rs` run every Wycheproof case with these sizes:
+39 valid and 27 invalid for AES-256-GCM, and 256 valid and 60 invalid for ChaCha20-Poly1305. A
+valid case must encrypt to the expected ciphertext and tag and decrypt back to the message. An
+invalid case must fail to decrypt. Cases with other key, nonce or tag sizes are skipped, because
+the API can't express them. The tests are inside the crate because encryption with the vectors'
+fixed nonces goes through a private function, so callers only ever get random nonces.
+
+The ACVP `ACVP-AES-GCM-1.0` sample set in `vectors/` has only 128-bit keys, so it has no
+AES-256-GCM cases yet.
 
 ## Threat model
 

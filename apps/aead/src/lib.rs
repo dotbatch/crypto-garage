@@ -102,3 +102,6 @@ pub fn open(
     }
     .map_err(|_| Error::Open)
 }
+
+#[cfg(test)]
+mod known_answers;
