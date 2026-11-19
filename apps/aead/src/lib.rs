@@ -55,18 +55,30 @@ pub fn seal(
 ) -> Result<Sealed, Error> {
     let mut nonce = [0u8; NONCE_LEN];
     getrandom::fill(&mut nonce).map_err(|_| Error::Random)?;
+    let ciphertext = seal_with_nonce(algorithm, key, &nonce, aad, plaintext)?;
+    Ok(Sealed { nonce, ciphertext })
+}
+
+/// Encrypts under a caller-chosen nonce. Private on purpose: only `seal`, which draws a random
+/// nonce, and the known-answer tests, which need the vectors' fixed nonces, may call it.
+fn seal_with_nonce(
+    algorithm: Algorithm,
+    key: &[u8; KEY_LEN],
+    nonce: &[u8; NONCE_LEN],
+    aad: &[u8],
+    plaintext: &[u8],
+) -> Result<Vec<u8>, Error> {
     let payload = Payload {
         msg: plaintext,
         aad,
     };
-    let ciphertext = match algorithm {
-        Algorithm::Aes256Gcm => Aes256Gcm::new(key.into()).encrypt(&nonce.into(), payload),
+    match algorithm {
+        Algorithm::Aes256Gcm => Aes256Gcm::new(key.into()).encrypt(&(*nonce).into(), payload),
         Algorithm::ChaCha20Poly1305 => {
-            ChaCha20Poly1305::new(key.into()).encrypt(&nonce.into(), payload)
+            ChaCha20Poly1305::new(key.into()).encrypt(&(*nonce).into(), payload)
         }
     }
-    .map_err(|_| Error::Seal)?;
-    Ok(Sealed { nonce, ciphertext })
+    .map_err(|_| Error::Seal)
 }
 
 /// Checks the tag and returns the plaintext. Returns `Error::Open` and no plaintext on any
@@ -90,3 +102,6 @@ pub fn open(
     }
     .map_err(|_| Error::Open)
 }
+
+#[cfg(test)]
+mod known_answers;
