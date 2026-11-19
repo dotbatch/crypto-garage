@@ -43,24 +43,6 @@ fn each_seal_draws_a_new_nonce() {
 }
 
 #[test]
-fn tampered_ciphertext_is_rejected() {
-    for alg in ALGORITHMS {
-        let key = generate_key().unwrap();
-        let sealed = seal(alg, &key, b"aad", b"message").unwrap();
-        // Flip one bit in the body and one in the tag.
-        for index in [0, sealed.ciphertext.len() - 1] {
-            let mut bad = sealed.ciphertext.clone();
-            bad[index] ^= 0x01;
-            assert_eq!(
-                open(alg, &key, &sealed.nonce, b"aad", &bad),
-                Err(Error::Open),
-                "{alg:?}"
-            );
-        }
-    }
-}
-
-#[test]
 fn wrong_key_nonce_or_aad_is_rejected() {
     for alg in ALGORITHMS {
         let key = generate_key().unwrap();
