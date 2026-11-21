@@ -57,9 +57,10 @@ cargo clippy -p aead-demo --all-targets -- -D warnings
 - Reusing a nonce under one key breaks GCM: it leaks the XOR of two plaintexts and the
   authentication key. The app never reuses a nonce, so this is shown only in the nonce-reuse
   demo (a later item, clearly labelled).
-- Tests `tampered_ciphertext_is_rejected` and `wrong_key_nonce_or_aad_is_rejected` in
-  `tests/round_trip.rs` flip bits in the ciphertext and tag, and change the key, nonce and
-  associated data. Each must return `Error::Open`.
+- `tests/tamper.rs` flips every single bit of the ciphertext, tag, nonce and associated data,
+  one at a time, for message and associated-data lengths of 0, 1, 15, 16 and 17 bytes. Every
+  flip must return `Error::Open` and no plaintext. `wrong_key_nonce_or_aad_is_rejected` in
+  `tests/round_trip.rs` also checks a wrong key.
 
 ## Limitations
 
