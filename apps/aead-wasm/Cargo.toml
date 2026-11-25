@@ -1,0 +1,29 @@
+[package]
+name = "aead-wasm"
+version = "0.0.0"
+description = "The AEAD playground's browser demo: aead-demo compiled to WebAssembly"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lib]
+# cdylib is the .wasm module the browser loads; rlib lets the native tests link the crate.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+aead-demo = { path = "../aead" }
+aes-gcm = "0.11.1"
+chacha20poly1305 = "0.11.0"
+wasm-bindgen = "0.2.130"
+zeroize = "1.9.1"
+
+# In the browser, getrandom has no OS to ask, so `wasm_js` points it at crypto.getRandomValues.
+# getrandom advises against this in libraries, but this crate is the final Wasm module and already
+# depends on wasm-bindgen.
+[target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
+getrandom = { version = "0.4.3", features = ["wasm_js"] }
+
+# Skip wasm-opt: wasm-pack would download an unpinned binaryen release to run it.
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false

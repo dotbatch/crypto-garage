@@ -1,0 +1,66 @@
+{% extends "project.html" %}
+
+{# Run this site's scripts, compile Wasm ('wasm-unsafe-eval' allows that and nothing else, unlike
+   'unsafe-eval'), and fetch the .wasm file from this site. #}
+{% block csp_scripts %}; script-src 'self' 'wasm-unsafe-eval'; connect-src 'self'{% endblock %}
+
+{% block demo %}
+<div class="demo">
+  <p>
+    <label for="aead-algorithm">Algorithm</label>
+    <select id="aead-algorithm">
+      <option value="aes-256-gcm">AES-256-GCM</option>
+      <option value="chacha20-poly1305">ChaCha20-Poly1305</option>
+    </select>
+  </p>
+  <label for="aead-message">Message</label>
+  <textarea id="aead-message" rows="2" spellcheck="false">attack at dawn</textarea>
+  <label for="aead-aad">Associated data (authenticated, not encrypted)</label>
+  <input id="aead-aad" type="text" value="to: alice" spellcheck="false">
+  <p><button type="button" id="aead-seal">Encrypt</button></p>
+  <dl>
+    <dt>Nonce</dt>
+    <dd><output id="aead-nonce">loading…</output></dd>
+    <dt>Ciphertext</dt>
+    <dd><output id="aead-ciphertext"></output></dd>
+    <dt>Tag</dt>
+    <dd><output id="aead-tag"></output></dd>
+  </dl>
+  <p>
+    <label for="aead-byte">Byte to change (the tag is the last 16)</label>
+    <input id="aead-byte" type="number" min="0" value="0">
+    <button type="button" id="aead-tamper">Flip a bit in it</button>
+    <button type="button" id="aead-open">Decrypt</button>
+  </p>
+  <p>Decrypted: <output id="aead-result"></output></p>
+
+  <h3>Nonce reuse (deliberately broken)</h3>
+  <p>
+    <label>
+      <input type="checkbox" id="reuse-toggle">
+      Encrypt two messages under one key and one nonce
+    </label>
+  </p>
+  <div id="reuse-panel" hidden>
+    <label for="reuse-p1">Message 1 (known to the attacker)</label>
+    <textarea id="reuse-p1" rows="2" spellcheck="false">Transfer $100 to account 1111</textarea>
+    <label for="reuse-p2">Message 2 (secret)</label>
+    <textarea id="reuse-p2" rows="2" spellcheck="false">Meet at the north gate at 6pm</textarea>
+    <dl>
+      <dt>Ciphertext 1</dt>
+      <dd><output id="reuse-c1"></output></dd>
+      <dt>Ciphertext 2</dt>
+      <dd><output id="reuse-c2"></output></dd>
+      <dt>Ciphertext 1 XOR ciphertext 2, computed without the key</dt>
+      <dd><output id="reuse-leaked"></output></dd>
+      <dt>Message 1 XOR message 2</dt>
+      <dd><output id="reuse-plain-xor"></output></dd>
+      <dt>Message 2, read from message 1 and the XOR</dt>
+      <dd><output id="reuse-recovered"></output></dd>
+    </dl>
+  </div>
+</div>
+<noscript><p>The demo needs JavaScript and WebAssembly.</p></noscript>
+{# A module script from this site, not inline, so a strict CSP can allow it by origin. #}
+<script type="module" src="{{ get_url(path='demos/aead/demo.js', cachebust=true) }}"></script>
+{% endblock %}
