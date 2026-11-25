@@ -6,7 +6,7 @@ Encrypts and authenticates messages with AES-256-GCM or ChaCha20-Poly1305, with 
 
 The first half of the AEAD playground: a small crate that shows the whole seal and open cycle
 (key, random nonce, associated data, tag check) with the nonce choice written out in the code.
-The browser page comes in a later item.
+The browser page is [`aead-wasm`](../aead-wasm/).
 
 ## Standard
 
