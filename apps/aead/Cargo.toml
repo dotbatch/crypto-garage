@@ -16,3 +16,8 @@ zeroize = "1.9.1"
 [dev-dependencies]
 hex = "0.4.3"
 vectors = { path = "../../vectors" }
+
+# Deliberately broken failure-mode demo. `test = true` runs its tests under `cargo test`.
+[[example]]
+name = "nonce_reuse"
+test = true
