@@ -95,7 +95,8 @@ header {
   text-transform: capitalize;
 }
 
-.demo textarea {
+.demo textarea,
+.demo input[type="text"] {
   display: block;
   box-sizing: border-box;
   width: 100%;

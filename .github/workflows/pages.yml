@@ -82,9 +82,9 @@ jobs:
           echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
       # Into site/static, so Zola copies each module next to the page that loads it.
       - name: Build Wasm demos
-        run: >-
-          wasm-pack build apps/hello-wasm --release --target web --no-pack
-          --out-dir ../../site/static/demos/hello-wasm/pkg
+        run: |
+          wasm-pack build apps/hello-wasm --release --target web --no-pack \n            --out-dir ../../site/static/demos/hello-wasm/pkg
+          wasm-pack build apps/aead-wasm --release --target web --no-pack \n            --out-dir ../../site/static/demos/aead/pkg
       - name: Install Zola
         working-directory: ${{ runner.temp }}
         run: |

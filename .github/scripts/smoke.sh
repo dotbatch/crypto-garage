@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Post-deploy smoke check: the live site answers over HTTPS, every checked page carries the strict
-# CSP, and the Wasm demo's module is served so browsers can load it.
+# CSP, and each Wasm demo's module is served so browsers can load it.
 #
 # Usage: bash .github/scripts/smoke.sh [base-url]
 # The base URL defaults to base_url in site/config.toml.
@@ -74,6 +74,8 @@ run_checks() {
   check_page /about/ no || status=1
   check_page /projects/hello-wasm/ yes || status=1
   check_wasm /demos/hello-wasm/pkg/hello_wasm_bg.wasm || status=1
+  check_page /projects/aead/ yes || status=1
+  check_wasm /demos/aead/pkg/aead_wasm_bg.wasm || status=1
   if [[ $base == https://* ]]; then
     check_https_redirect || status=1
   fi
